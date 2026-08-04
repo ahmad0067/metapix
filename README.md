@@ -95,16 +95,12 @@ backend automatically.
   host — Vercel's serverless functions cannot run it, so the backend needs a
   proper container/VM, not a serverless platform.
 
-A minimal Dockerfile for the backend:
-
-```dockerfile
-FROM python:3.11-slim
-RUN apt-get update && apt-get install -y libimage-exiftool-perl && rm -rf /var/lib/apt/lists/*
-WORKDIR /app
-COPY backend/ .
-RUN pip install --no-cache-dir -r requirements.txt
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
-```
+`backend/Dockerfile` is already included in this repo. On Railway or Render:
+1. Set **Root Directory** to `backend`
+2. Set **Builder** to **Dockerfile** (the platform will find `backend/Dockerfile`
+   automatically once Root Directory is set — no extra path needed)
+3. Deploy — the platform gives you a live URL like `https://metapix-backend.up.railway.app`
+4. Paste that URL into the frontend's `NEXT_PUBLIC_API_URL` environment variable on Vercel
 
 ---
 
